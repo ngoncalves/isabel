@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# define here where the server shared library is located
+SERVER_LIB=./libserver.so
+
+show_usage()
+{
+	echo "Usage: $0 app args" >&2
+	echo "where" >&2
+	echo " - app : name of the application under test" >&2	
+	echo " - args: the application command line arguments, if any" >&2
+	echo "" >&2
+	exit 1
+}
+
+show_copyright()
+{
+	echo "Isabel: Qt testing and inspection" >&2
+	echo "Nelson Gon\c calves (c) 2016" >&2
+	echo "BSD license, see the file LICENSE for details" >&2
+	echo "" >&2
+}
+
+#-------------------------------
+# main
+show_copyright
+
+if [ $# -lt 1 ]
+then
+	show_usage
+else
+	echo "launching: $1"
+	LD_PRELOAD=${SERVER_LIB} $1 ${@:2}
+fi
+	

@@ -1,0 +1,85 @@
+//--------- Protobuf configuration--------------------//
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+//--------- Representation of a GUI object -----------//
+// representation of the object generic properties
+message Property
+{
+	required string name     = 1;		// the object property name
+	required bool   writable = 2;		// set to true if the property can be modified
+	optional string value    = 3;		// JSON encoded string 
+}
+
+message Object
+{
+	// common object properties
+	required uint32 id 		= 1;	// the server assigned object ID
+	required string type	= 2;	// the object class name
+	required uint32 parent 	= 3;	// the object parent ID
+	required uint64 address = 4;	// the object address
+	optional string name 	= 5;	// the object name, if available
+}
+
+//--------- Representation of an user captured event -----------//
+message UserEvent
+{
+	// possible captured event types
+	enum Type {							
+		KEYBOARD 		 = 0;	// user released/released a key
+		MOUSE_MOVE_REL   = 1;	// the mouse moved, relative to its last position
+		MOUSE_MOVE_ABS   = 2;	// the mouse moved, in absolute value
+		MOUSE_BUTTON  	 = 3;	// a mouse button was pressed/released
+	}; 
+
+	required Type 	type 		= 1; 	// event type
+	optional uint32 instant 	= 2; 	// time, in milliseconds, when this event occurred
+	optional string key 		= 3; 	// if it is a key event, this contains the respective name
+	optional bool   press   	= 4; 	// if true, the button/key was pressed, otherwise it was released 
+	optional uint32 button  	= 5; 	// if it is a mouse button event, this contains the value of the button that changed
+	optional int32  xpos 		= 6; 	// if it is a mouse movement event, this contains the x position of the mouse cursor
+	optional int32  ypos 		= 7; 	// if it is a mouse movement event, this contains the y position of the mouse cursor
+}
+
+//--------- Request Messages --------------------------//
+message Request {
+	// possible request types
+	enum Type {							
+		FETCH_OBJECT_TREE 	= 0;	// rebuild the object tree and return it, for each object only its basic properties
+		FETCH_OBJECT        = 1;	// read all of the properties for the specified object
+		WRITE_PROPERTY		= 2; 	// add/modify a property in the given object
+		RECORD_USER 		= 3;	// record the user events: mouse and keyboard
+		TAKE_SCREENSHOT 	= 4;	// take a screenshot
+		KILL_APP			= 5;	// forcibly close the application
+		SIMULATE_USER		= 6;	// use the xdotool to generate user events and interact with windows
+	}; 
+
+	required Type 		type 		= 1;	// request identifier
+	optional uint32		id 			= 2;	// identification of the object to retrieve or modify
+	optional Property   property 	= 3; 	// the object property to add/modify	
+	optional bool 		start 		= 4;	// begin recording if true, stop it otherwise
+	optional UserEvent 	user 		= 5; 	// command for the xdotool to perform
+}
+
+//--------- Response Messages --------------------------//
+message Response {
+	
+	// possible error codes
+	enum Error {
+		NO_ERROR 				= 0; 	// all good, no error to report
+		UNKNOWN_OBJECT_ID 		= 1;	// cannot find the object with the given ID 
+		PROPERTY_NOT_FOUND 		= 2;	// cannot find the property with the given name 
+		PROPERTY_NOT_WRITABLE 	= 3;	// cannot write the specified object property 
+		NO_OBJECT_TREE 			= 4;	// no object tree, must be rebuilt first
+		INVALID_REQUEST         = 5;    // the request type is invalid 
+		NO_REMOTE_HOST 			= 6;	// could not connect to the recording host
+		X11_ERROR 				= 7; 	// failed to communicate with the X11 server
+		UNKNOWN_ERROR 			= 8;  	// unspecified error
+	}
+
+	required Error 		error   	= 1; 	// error code, if any
+	repeated Object 	objects 	= 2; 	// list with the objects found, and their properties
+	optional bytes 		image   	= 3; 	// the screenshot that was taken 
+	repeated UserEvent 	events		= 4; 	// list of captured user events 
+	repeated Property   properties 	= 5; 	// the complete list of the object properties
+}
