@@ -22,7 +22,7 @@ LIBSERVER := $(BUILD)/libserver.so
 
 .PHONY: clean client protocol
 
-all: $(LIBSERVER) client tests
+all: $(LIBSERVER) client
 	@echo '================================='
 	@echo 'Copying binaries                 '
 	@echo '================================='	
@@ -46,12 +46,14 @@ $(SERVER)/protocol.pb.cpp: ./protocol.proto
 	@echo '=============================='
 	@echo 'Generating protobuf C++ code  '
 	@echo '=============================='
+	-rm -rf server/protocol.pb*
 	-protoc --cpp_out $(SERVER) $^
 
 $(CLIENT)/protocol_pb2.py: ./protocol.proto
 	@echo '================================='
 	@echo 'Generating protobuf Python code  '
 	@echo '================================='
+	-rm -rf client/protocol_pb2.py
 	-protoc --python_out $(CLIENT) $^
 
 tests: $(LIBSERVER) client

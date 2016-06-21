@@ -29,8 +29,6 @@
 #include "isabelSLIP.h"
 #include "isabelSerialize.h"
 
-#include <cstdio>
-
 #include <QByteArray>
 #include <QFile>
 #include <QApplication>

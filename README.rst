@@ -48,14 +48,11 @@ Building Pre-Requisites
 
 In order to build the Isabel server, the following software is required:
 
- * Qt development enviroment (duh....)
+ * Qt development enviroment
  * libx11, libXtst and libXext for interfacing the X11 windows server
  * libcairo, for generating screenshots in PNG format
  * libprotobuf_, Google's protobuf library for inter-process communication
  * make, gcc and friends
-
-Beware that protobuff can be a pain to build because of changes in the C++ 
-standard regarding strings. A recent compiler (GCC v4.9 or latter) is required.
 
 The Python client has the following dependencies:
 
@@ -63,8 +60,16 @@ The Python client has the following dependencies:
  * tinydb_, a lightweight and simple Python document database
  * opencv_ for python, a library for image manipulation
 
-With the exception of Google's protobuf, all other software packages are readily available
-with apt-get. The bravest can of course use the Internet's and compile from scratch.
+Most of these software packages are readily available from your distro repositories. The bravest can
+of course use the Internet's and compile from scratch, everybody else can just use apt-get. To install
+the server dependencies:
+
+  $ sudo apt-get install libprotoc-dev protobuf-compiler libx11-dev libxtst-dev libcairo2-dev
+
+The client dependencies can be installed as follows:
+	
+  $ sudo apt-get install pip python-opencv	
+  $ sudo pip install tinydb protobuf
 
 For building the tests, the following is necessary:
 
@@ -79,7 +84,7 @@ In order to build Isabel:
 
 	1. checkout the code from the repository
 	2. edit the file isabel/src/Makefile, with the location of qmake on your system
-	3. go to isabel/src and type make
+	3. go to the root directory and type: make -C src/
 	4. if the build is successfull, the binaries are in isabel/bin
 
 The tests are build and executed apart from the Isabel framework. Use `make tests`

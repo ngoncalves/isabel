@@ -36,7 +36,7 @@
 #include <QTcpSocket>
 
 #include <string>
-#include <map.h>
+#include <map>
 
 #include "protocol.pb.h"
 #include "isabelX11.h"

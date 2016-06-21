@@ -1,6 +1,6 @@
 TEMPLATE    = lib
 QT 			+= concurrent network widgets quick
-CONFIG      += release plugin
+CONFIG      += release plugin dll
 OBJECTS_DIR = ../build
 MOC_DIR     = ../build
 DESTDIR 	= ../build
