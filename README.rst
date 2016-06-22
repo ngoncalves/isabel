@@ -83,11 +83,11 @@ Building Instructions
 In order to build Isabel:
 
 	1. checkout the code from the repository
-	2. edit the file isabel/src/Makefile, with the location of qmake on your system
-	3. go to the root directory and type: make -C src/
+	2. edit in the file `build.sh`, the Qt root directory 
+	3. run: `./build.sh isabel`
 	4. if the build is successfull, the binaries are in isabel/bin
 
-The tests are build and executed apart from the Isabel framework. Use `make tests`
+The tests are build and executed apart from the Isabel framework. Use `./build.sh tests`
 to build and then run the tests.
 
 Contributing

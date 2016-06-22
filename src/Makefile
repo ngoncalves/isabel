@@ -4,13 +4,8 @@
 #  :License: GPLv3
 #
 
-# set this to the correct path on your system
-QMAKE := /opt/Qt5.4.1/5.4/gcc_64/bin/qmake
-
 #--------------------------------------------------------
 # no need to change below this line
-
-export QMAKE
 
 BIN    := ../bin
 BUILD  := ./build
@@ -32,7 +27,7 @@ $(LIBSERVER): $(SERVER)/protocol.pb.cpp
 	@echo '================================='
 	@echo 'Generating Makefile for server   '
 	@echo '================================='	
-	-$(QMAKE) -o $(SERVER)/Makefile $(SERVER)/server.pro
+	-qmake -o $(SERVER)/Makefile $(SERVER)/server.pro
 	@echo '================================='
 	@echo 'Building the server              '
 	@echo '================================='	
@@ -85,8 +80,12 @@ clean:
 	@echo 'Cleaning previous builds  '
 	@echo '=========================='
 	-make -C $(SERVER) clean
+	-make -C $(TEST) clean	
 	-rm -rf $(CLIENT)/*.pyc
 	-rm -rf $(BUILD)/*
 
 real-clean: clean
-	make -C $(TEST) clean
+	-rm -rf $(SERVER)/Makefile
+	-rm -rf $(SERVER)/protocol.pb.*
+	-rm -rf $(CLIENT)/protocol_pb2*
+	make -C $(TEST) real-clean

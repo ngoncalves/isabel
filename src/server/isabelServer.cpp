@@ -65,7 +65,11 @@ isabelServer::isabelServer(int port, QObject *parent)
 
 	if(!server->listen(QHostAddress::Any,port))
 	{
-		qDebug() << "[isabel] TCP server failed to start" ;
+		qDebug() << "[isabel] server failed to start" ;
+	}
+	else
+	{
+		qDebug() << "[isabel] server is running" ;
 	}
 }
 

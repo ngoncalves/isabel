@@ -30,6 +30,9 @@
 
 /*--------------------- Private Variable Declarations ----------------*/
 
+#define STARTUP_SLEEP_WAIT 	(1000)					/* wait time in miliseconds, in between checks to see if the application has started */
+#define STARTUP_MAX_WAIT	(STARTUP_SLEEP_WAIT*5)  /* maximum amount of time to wait, in miliseconds */
+
 /*--------------------- Private Class Declarations --------------------*/
 
 /*--------------------- Public Class Definitions --------------------*/
@@ -46,12 +49,20 @@ void isabelStartup::watchForStartup(void)
 		
 void isabelStartup::doWait(void)
 {
+	/* wait at most 10 seconds for the application to start */
+	int timeout = STARTUP_MAX_WAIT;
+		
+	qDebug() << "[isabel] waiting for the application to startup";
+
 	/* wait for the target application to begin */
-	while (QCoreApplication::startingUp())
+	while(QCoreApplication::startingUp() && (timeout > 0))
 	{
-		  QThread::msleep(100);
+		QThread::msleep(STARTUP_SLEEP_WAIT);
+		timeout -= STARTUP_SLEEP_WAIT;
 	}
 	
+	qDebug() << "[isabel] launching server";
+
 	/* run the initialization function as soon as the application 
 	   as started the main loop
 	 */

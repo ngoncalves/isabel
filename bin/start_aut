@@ -15,10 +15,11 @@ show_usage()
 
 show_copyright()
 {
+	echo "---------------------------------------------" >&2
 	echo "Isabel: Qt testing and inspection" >&2
 	echo "Nelson Gon\c calves (c) 2016" >&2
 	echo "BSD license, see the file LICENSE for details" >&2
-	echo "" >&2
+	echo "---------------------------------------------" >&2
 }
 
 #-------------------------------

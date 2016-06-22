@@ -17,7 +17,7 @@ $(UT_SERVER):
 	@echo '==================================='
 	@echo 'Building the Server Unit Test cases'
 	@echo '==================================='	
-	-$(QMAKE) -o ut_server/Makefile ut_server/ut_server.pro
+	-qmake -o ut_server/Makefile ut_server/ut_server.pro
 	-rm -rf $(BUILD)/*.o
 	-rm -rf $(BUILD)/moc_*
 	make -C ut_server
@@ -26,7 +26,7 @@ $(QT_APP):
 	@echo '================================='
 	@echo 'Building the Qt example app      '
 	@echo '================================='	
-	-$(QMAKE) -o qt_app/Makefile qt_app/application.pro
+	-qmake -o qt_app/Makefile qt_app/application.pro
 	-rm -rf $(BUILD)/*.o
 	-rm -rf $(BUILD)/moc_*
 	make -C qt_app
@@ -35,7 +35,7 @@ $(QUICK_APP):
 	@echo '================================='
 	@echo 'Building the QtQuick example app ' 
 	@echo '================================='	
-	-$(QMAKE) -o quick_app/Makefile quick_app/calqlatr.pro
+	-qmake -o quick_app/Makefile quick_app/calqlatr.pro
 	-rm -rf $(BUILD)/*.o
 	-rm -rf $(BUILD)/moc_*
 	make -C quick_app
@@ -50,3 +50,8 @@ clean:
 	-make -C qt_app clean
 	-make -C quick_app clean
 	-rm -rf $(BUILD)/*
+
+real-clean: clean
+	-rm -rf qt_app/Makefile
+	-rm -rf quick_app/Makefile
+
