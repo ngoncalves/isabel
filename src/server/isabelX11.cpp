@@ -273,29 +273,6 @@ bool isabelX11::simulate_user(const UserEvent &event)
 	return result;
 }
 
-bool isabelX11::screenshot(const char *file_name)
-{
-	cairo_surface_t *surface = NULL;
-	int 			screen   = DefaultScreen((Display *)display);
-	Window  		root     = DefaultRootWindow((Display *)display);
-    
-	/* get the root surface on given display */
-    surface = cairo_xlib_surface_create((Display *)display,
-                                        root,
-                                        DefaultVisual((Display *)display,screen),
-                                        DisplayWidth((Display *)display, screen), 
-                                        DisplayHeight((Display *)display, screen));
-    
-	/* right now, the tool only outputs PNG images */
-	cairo_surface_write_to_png(surface,file_name);
-    
-	/* free the memory and resources */
-	cairo_surface_destroy(surface);
-
-	return true;
-}
-
-
 void isabelX11::get_x11_state(T_X11_STATE *state)
 {
 	memset(state,0x00,sizeof(T_X11_STATE));

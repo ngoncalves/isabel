@@ -5,7 +5,7 @@
 # Adapt the path of to your local installation of Qt
 #
 
-QTDIR=/usr/local/Qt-5.4.1
+QTDIR=/opt/Qt5.4.1/5.4/gcc_64/
 
 ###############################################################
 # no need to change below this line
@@ -51,7 +51,7 @@ run_make()
 	then
 		echo "[build] installing build dependencies:"
 		sudo apt-get update
-		sudo apt-get install libprotoc-dev protobuf-compiler libx11-dev libxtst-dev libcairo2-dev python-pip python-opencv
+		sudo apt-get install libprotoc-dev protobuf-compiler libx11-dev libxtst-dev libcairo2-dev python-pip python-opencv python-tk
 		sudo pip install tinydb protobuf
 	else
 		echo "[build] unknown option: $1" 

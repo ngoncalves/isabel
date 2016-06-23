@@ -32,7 +32,9 @@
 #include <QByteArray>
 #include <QFile>
 #include <QApplication>
-   
+#include <QPixmap>
+#include <QScreen>
+
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QWidget>
 
@@ -205,7 +207,6 @@ void isabelServer::add_object(unsigned int parent, QObject *obj, Response &respo
 	Object *qtObj = response.add_objects(); 
 	qtObj->set_id(id);
 	qtObj->set_parent(parent);
-	qtObj->set_address(reinterpret_cast<quintptr>(obj));
 	qtObj->set_type(obj->metaObject()->className());
 	qtObj->set_name(obj->objectName().toUtf8().constData());
 
@@ -299,20 +300,22 @@ void isabelServer::simulate_user(Response &response, const Request &request)
 
 void isabelServer::take_screenshot(Response &response)
 {
-	if(x11->screenshot("/tmp/screenshot.png"))
+	/* platform indepent way of taking a screenshot of the whole screen */
+	QScreen *screen = QGuiApplication::primaryScreen();
+
+    if(screen)
 	{
-		/* now load the file into RAM and send it over the wire */
-		QFile file("/tmp/screenshot.png");
-		if(!file.open(QIODevice::ReadOnly))
-		{
-			response.set_error(Response::UNKNOWN_ERROR);	
-		}
-		else
-		{
-			QByteArray blob = file.readAll();
-			response.set_image(blob.constData(),blob.size());
-			response.set_error(Response::NO_ERROR);
-		}
+		/* take a screenshot of the whole screen and convert it to PNG */
+		QPixmap shot = screen->grabWindow(0);
+		
+		QByteArray blob;
+		QBuffer buffer(&blob);
+		buffer.open(QIODevice::WriteOnly);
+		shot.save(&buffer,"PNG");
+
+		/* send the image back to the client */
+		response.set_image(blob.constData(),blob.size());
+		response.set_error(Response::NO_ERROR);
 	}
 	else
 	{

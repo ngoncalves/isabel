@@ -52,6 +52,7 @@ In order to build the Isabel server, the following software is required:
  * libx11, libXtst and libXext for interfacing the X11 windows server
  * libcairo, for generating screenshots in PNG format
  * libprotobuf_, Google's protobuf library for inter-process communication
+ * python-tk, for the inspector GUI
  * make, gcc and friends
 
 The Python client has the following dependencies:
@@ -68,7 +69,7 @@ the server dependencies:
 
 The client dependencies can be installed as follows:
 	
-  $ sudo apt-get install pip python-opencv	
+  $ sudo apt-get install pip python-opencv python-tk	
   $ sudo pip install tinydb protobuf
 
 For building the tests, the following is necessary:

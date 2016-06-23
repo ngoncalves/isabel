@@ -59,9 +59,6 @@ class SLIP():
 		"""
 		slip = bytearray()
 
-		if not packet:
-			return slip 
-
 		slip.append(self.SLIP_END)
 
 		for p in packet:
@@ -88,7 +85,7 @@ class SLIP():
 		"""
 		slip = bytearray()
 
-		if not packet or len(packet) == 0:
+		if len(packet) == 0:
 			return slip
 
 		# find the begining of the packet 

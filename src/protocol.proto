@@ -17,8 +17,7 @@ message Object
 	required uint32 id 		= 1;	// the server assigned object ID
 	required string type	= 2;	// the object class name
 	required uint32 parent 	= 3;	// the object parent ID
-	required uint64 address = 4;	// the object address
-	optional string name 	= 5;	// the object name, if available
+	optional string name 	= 4;	// the object name, if available
 }
 
 //--------- Representation of an user captured event -----------//

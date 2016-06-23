@@ -23,7 +23,6 @@
    -------
 
    This module interfaces the X11 server, providing the functionality to:
-   	- take screenshots
    	- capture user mouse and keyboard events
    	- replay user events
  */
@@ -83,17 +82,6 @@ public:
 		#returns true if successfull, false otheriwse
 	 */
 	bool simulate_user(const UserEvent &event);
-
-	/* Take a screenshot of the whole screen.
-
-		@file_name 	name of the PNG file where the screenshot is saved
-
-		#returns true if successfull, false otheriwse
-
-		The code of this function is based on the snipet from here:
-		https://gist.github.com/bozdag/9909679
-	*/
-	bool screenshot(const char *file_name);
 
 public slots:
 	/* Record the user events.
