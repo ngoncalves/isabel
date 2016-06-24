@@ -52,8 +52,8 @@ class Inspector(ttk.Frame):
 		# create the GUI elements
 		self.tree_label			   = ttk.Label(self,text='Objects Tree')
 		self.properties_label	   = ttk.Label(self,text='Object Properties')
-		self.objects_tree          = ttk.Treeview(self,columns=('id'),yscrollcommand=self.tree_scroll)
-		self.property_list         = ttk.Treeview(self,columns=('Writtable','Value'),yscrollcommand=self.properties_scroll)
+		self.objects_tree          = ttk.Treeview(self,columns=('id'))
+		self.property_list         = ttk.Treeview(self,columns=('Writtable','Value'))
 		self.refresh_tree_button   = ttk.Button(self,text='Refresh Tree',command=self.refresh_tree)
 		self.refresh_object_button = ttk.Button(self,text='Refresh Object',command=self.refresh_object)
 		self.screenshot_button     = ttk.Button(self,text='Screenshot',command=self.screenshot)
