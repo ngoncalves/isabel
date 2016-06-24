@@ -129,7 +129,7 @@ void isabelServer::ready_read(void)
 				break; 
 
 			case Request::TAKE_SCREENSHOT:
-				take_screenshot(response);
+				take_screenshot(response,request.id());
 				break;
 
 			case Request::KILL_APP:
@@ -298,7 +298,7 @@ void isabelServer::simulate_user(Response &response, const Request &request)
 	}
 }
 
-void isabelServer::take_screenshot(Response &response)
+void isabelServer::take_screenshot(Response &response, uint32_t win_id)
 {
 	/* platform indepent way of taking a screenshot of the whole screen */
 	QScreen *screen = QGuiApplication::primaryScreen();
@@ -306,7 +306,7 @@ void isabelServer::take_screenshot(Response &response)
     if(screen)
 	{
 		/* take a screenshot of the whole screen and convert it to PNG */
-		QPixmap shot = screen->grabWindow(0);
+		QPixmap shot = screen->grabWindow(win_id);
 		
 		QByteArray blob;
 		QBuffer buffer(&blob);

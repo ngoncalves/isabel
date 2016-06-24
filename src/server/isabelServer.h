@@ -121,8 +121,9 @@ private:
 	/* Take a shot of the whole screen.
 
 		@response  protobuff where the response is returned
+		@win_id    the X11 window identifier, use 0 for the whole screen
 	*/
-	void take_screenshot(Response &response);
+	void take_screenshot(Response &response, uint32_t win_id);
 
 	/* Add the object to the list of objects.
 

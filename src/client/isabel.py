@@ -242,15 +242,18 @@ class Screen(Tester):
 	to further process the resulting images.
 	"""
 		
-	def take_screenshot(self,file_name):
+	def take_screenshot(self,file_name,winid=0):
 		"""
 		Request the server to take a screenshot of the entire screen.
 
 		@file_name  name of the image file where the screenshot is save, in PNG format
+		@winid      the X11 window on which to take the screenshot
 
 		#returns True if successfull, False otherwise
+
+		If win_id is zero, then the screenshot includes all of the screen
 		"""
-		return self.client.take_screenshot(file_name)
+		return self.client.take_screenshot(file_name,win_id=winid)
 
 	def find(self,needle,screen):
 		"""
