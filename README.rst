@@ -1,7 +1,6 @@
 Isabel
 =======
 :Author: Nelson Gonçalves
-:Email: nelsongoncalves@patois.eu
 :Website: https://github.com/ngoncalves
 
 Summary
