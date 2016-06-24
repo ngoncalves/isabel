@@ -91,6 +91,22 @@ In order to build Isabel:
 The tests are build and executed apart from the Isabel framework. Use `./build.sh tests`
 to build and then run the tests.
 
+Inspector GUI
+-------------
+
+This is a very simple GUI that allows to visualize the application objects tree and their
+properties, as seen by the client. It also provides an handy shortcut for taking screenshots
+of the application under test. To use the inspector simply go to the folder src/client
+and run the script with the server location:
+
+	$ cd src/client
+	$ ./inspector.py localhost 4242
+
+The GUI is written in Tkinter, which might be seem paradoxical given that Isabel is aimed for
+Qt testing. The reason is simple: I am lazy. The inspector code is less than 200 lines, including
+comments and blank lines, and it runs out of the box on most platforms. Try doing that with
+Qt.
+
 Contributing
 ------------
 
