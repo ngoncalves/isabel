@@ -394,20 +394,25 @@ class Client():
 		else:
 			return True
 
-	def take_screenshot(self,name):
+	def take_screenshot(self,name,win_id=0):
 		"""
 		Take a screenshot and save it to the file with the given name.
 
-		@name  file name where to save the screenshot
+		@name    file name where to save the screenshot
+		@win_id  identifier of the window from where to take the screenshot
 
 		#returns True if successfull, False otherwise
 
-		The file is saved locally, on the client side, in PNG format
+		The file is saved locally, on the client side, in PNG format.
+		If window ID is zero, then the screenshot is taken on the whole screen. Otherwise
+		it is taken from the specified window ID (which is X11 specific)
 		"""
 		logging.info('[Client] taking a screenshot of the whole screen')
 
-		request = protocol_pb2.Request()
+		request      = protocol_pb2.Request()
 		request.type = protocol_pb2.Request.TAKE_SCREENSHOT
+		request.id   = win_id
+
 		response = self.send(request)
 		if not response or response.error != protocol_pb2.Response.NO_ERROR:
 			logging.error('[Client] failed to take screenshot')
