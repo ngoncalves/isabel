@@ -172,7 +172,7 @@ class Client():
 			self.sock = None
 			return True
 		else:
-			logging.error('[Client] not connected to the server')
+			logging.warn('[Client] not connected to the server')
 
 	def send(self,req):
 		"""
