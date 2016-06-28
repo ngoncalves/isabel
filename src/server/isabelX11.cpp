@@ -40,7 +40,6 @@ extern "C"
 }
 
 #include <cassert>
-#include <cstdio>
 
 /*--------------------- Private Data Declarations ----------------*/
 
@@ -53,7 +52,7 @@ extern "C"
 isabelX11::isabelX11(QObject *parent)
 : QObject(parent)
 {
-	timer  = new QTimer(this); 
+	timer = new QTimer(this); 
 
 	connect(timer,SIGNAL(timeout()),this,SLOT(record_user())); 
 

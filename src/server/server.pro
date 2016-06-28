@@ -1,10 +1,10 @@
 TEMPLATE    = lib
 QT 			+= concurrent network widgets quick
 CONFIG      += release plugin dll
+CONFIG      -= debug
 OBJECTS_DIR = ../build
 MOC_DIR     = ../build
 DESTDIR 	= ../build
-DEFINES     += LIB_QTINSPECTOR_BUILD
 INCLUDEPATH += ../qjson /usr/include/google/protobuf
 LIBS        += -L /usr/lib -lprotobuf -lcairo -lX11 -lXtst -lXext
 

@@ -33,7 +33,11 @@
 #include <QByteArray>
 #include <QCoreApplication>
 
+#include <cstdio>
+
 /*--------------------- Private Variable Definitions ----------------*/
+
+isabelServer *server = NULL;
 
 /*--------------------- Private Function Declarations ---------------*/
 
@@ -41,6 +45,8 @@
 
 LIB_INIT_FUNC void isabel_initialize(void)
 {
+	fprintf(stderr,"[isabel] loaded library \n");
+
 	/* create the Qt object that will wait for the application to start */
 	isabelStartup* init = new isabelStartup(isabel_main);
 	QObject::connect(init,SIGNAL(startupComplete()),init,SLOT(deleteLater()));
@@ -58,8 +64,8 @@ void isabel_main(void)
 		port = value.toInt();
 	}
 	
-	/* create the server, no need to keep the reference */
-	new isabelServer(port,QCoreApplication::instance());
+	/* create the server */
+	server = new isabelServer(port,QCoreApplication::instance());
 }
 
 /*--------------------- Private Function Definitions ----------------*/

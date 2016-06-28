@@ -30,10 +30,10 @@
 /*--------------------- Public Variable Declarations ----------------*/
 #define DEFAULT_ISABEL_PORT (4242)				/* the server listening port */
 #define ISABEL_PORT_ENV     "ISABEL_PORT"		/* name of the environment variable, that sets the port */
-#define ISABEL_VERBOSE     	"ISABEL_VERBOSE"	/* name of the environment variable, that enables a verbose output*/
 
 #if defined(__linux__) || defined(__APPLE__) || defined(__unix__)
 	#define LIB_INIT_FUNC __attribute__((constructor))
+	#define LIB_EXIT_FUNC __attribute__((destructor))
 #else
 	#define LIB_INIT_FUNC
 #endif

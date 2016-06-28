@@ -51,6 +51,8 @@
 #include <QtQml/QQmlApplicationEngine>
 #include <QtQml/QQmlListProperty>
 
+#include <cstdio>
+
 /*--------------------- Private Variable Declarations ----------------*/
 
 /*--------------------- Public Class Definitions -------------------*/
@@ -58,20 +60,19 @@
 isabelServer::isabelServer(int port, QObject *parent)
 : QObject(parent)
 {
-	x11 = new isabelX11(this); 
-
-	/* create the TCP server */
+	/* create the X11 interation and TCP server objects */
+	x11    = new isabelX11(this); 
 	server = new QTcpServer(this);
 
 	connect(server,SIGNAL(newConnection()),this,SLOT(new_connection()));
 
 	if(!server->listen(QHostAddress::Any,port))
 	{
-		qDebug() << "[isabel] server failed to start" ;
+		fprintf(stderr,"[isabel] server failed to start\n") ;
 	}
 	else
 	{
-		qDebug() << "[isabel] server is running" ;
+		fprintf(stderr,"[isabel] server is running\n") ;
 	}
 }
 
