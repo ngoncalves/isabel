@@ -102,7 +102,7 @@ and run the script with the server location:
 	$ ./inspector.py localhost 4242
 
 The GUI is written in Tkinter, which might be seem paradoxical given that Isabel is aimed for
-Qt testing. The reason is simple: I am lazy. The inspector code is less than 200 lines, including
+Qt testing. The reason is simple: I am lazy. The inspector code is less than 300 lines, including
 comments and blank lines, and it runs out of the box on most platforms. Try doing that with
 Qt.
 
