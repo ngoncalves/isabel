@@ -31,6 +31,7 @@
 
 import client
 import protocol_pb2
+import Tkinter as tk
 import ttk
 import tkMessageBox
 import tkFileDialog
@@ -49,23 +50,64 @@ class Inspector(ttk.Frame):
 		ttk.Frame.__init__(self, master)
 		self.grid()                       
 		
+		# allow the GUI to strech
+		self.columnconfigure(0,weight=1,pad=2)	
+		self.columnconfigure(1,weight=1,pad=2)	
+		self.columnconfigure(2,weight=1,pad=2)	
+		self.columnconfigure(3,weight=1,pad=2)	
+		self.columnconfigure(4,weight=1,pad=2)	
+		self.columnconfigure(5,weight=1,pad=2)	
+		self.columnconfigure(6,weight=1,pad=2)	
+		self.columnconfigure(7,weight=1,pad=2)	
+		self.columnconfigure(8,weight=1,pad=2)	
+		self.columnconfigure(9,weight=1,pad=2)	
+		self.columnconfigure(10,weight=1,pad=2)	
+		self.columnconfigure(11,weight=1,pad=2)	
+		self.rowconfigure(0,weight=1,pad=2)		# contains the text labels
+		self.rowconfigure(1,weight=4,pad=2)		# contains the tree and properties
+		self.rowconfigure(2,weight=1,pad=2)		# contains the buttons
+
 		# create the GUI elements
-		self.tree_label			   = ttk.Label(self,text='Objects Tree')
-		self.properties_label	   = ttk.Label(self,text='Object Properties')
-		self.objects_tree          = ttk.Treeview(self,columns=('id'))
-		self.property_list         = ttk.Treeview(self,columns=('Writtable','Value'))
+		self.tree_label		  = ttk.Label(self,text='Objects Tree')
+		self.properties_label = ttk.Label(self,text='Object Properties')
+
+		self.objects_tree  = ttk.Treeview(self,columns=('id'))
+		self.property_list = ttk.Treeview(self,columns=('Writable','Value'))
+
+		self.tree_scroll     = ttk.Scrollbar(orient=tk.VERTICAL,command=self.objects_tree.yview)
+		self.property_scroll = ttk.Scrollbar(orient=tk.VERTICAL,command=self.property_list.yview)
+
 		self.refresh_tree_button   = ttk.Button(self,text='Refresh Tree',command=self.refresh_tree)
 		self.refresh_object_button = ttk.Button(self,text='Refresh Object',command=self.refresh_object)
 		self.screenshot_button     = ttk.Button(self,text='Screenshot',command=self.screenshot)
 		
+		self.objects_tree.heading('id',text='ID') 
+		self.objects_tree.heading('#0',text='Object') 
+		self.objects_tree.column('#0',anchor='e') 
+		self.objects_tree.column('id',anchor='w') 
+		self.objects_tree['yscroll'] = self.tree_scroll.set
+
+		self.property_list.heading('#0',text='Property') 
+		self.property_list.heading('Writable',text='Writable') 
+		self.property_list.heading('Value',text='Value') 
+		self.property_list.column('#0',anchor='e') 
+		self.property_list.column('Writable',anchor='center') 
+		self.property_list.column('Value',anchor='w') 
+		self.property_list['yscroll'] = self.property_scroll.set
+
 		# place them on the GUI
-		self.tree_label.grid(column=0,row=0,)
-		self.properties_label.grid(column=1,row=0)
-		self.objects_tree.grid(column=0,row=1)
-		self.property_list.grid(column=1,row=1)
-		self.refresh_tree_button.grid(column=0,row=2)
-		self.screenshot_button.grid(column=1,row=2)
-		self.refresh_object_button.grid(column=2,row=2)
+		self.tree_label.grid(column=2,row=0,columnspan=2)
+		self.properties_label.grid(column=7,row=0,columnspan=2)
+		
+		self.objects_tree.grid(column=0,row=1,columnspan=4)
+		self.property_list.grid(column=5,row=1,columnspan=6)
+
+		self.tree_scroll.grid(column=5,row=1)
+		self.property_scroll.grid(column=11,row=1)
+
+		self.refresh_tree_button.grid(column=2,row=2,columnspan=2)
+		self.screenshot_button.grid(column=5,row=2,columnspan=2)
+		self.refresh_object_button.grid(column=8,row=2,columnspan=2)
 	
 		# add event handlers
 		self.objects_tree.bind('<<TreeviewSelect>>',self.object_selected)
