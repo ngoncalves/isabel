@@ -27,6 +27,7 @@
 #include "isabelStartup.h"
 
 #include <QtConcurrent>
+#include <QApplication>
 
 #include <cstdio>
 #include <ctime>
@@ -49,19 +50,29 @@ void isabelStartup::watchForStartup(void)
 		
 void isabelStartup::doWait(void)
 {
+	int timeout = 3000;		/* waiting timeout: 30 seconds */
+
 	fprintf(stderr,"[isabel] waiting for the application to startup\n");
 
 	/* wait for the target application to begin */
-	while(QCoreApplication::startingUp())
+	while(QApplication::startingUp() && timeout > 0)
 	{
 		/* snooze */
 		QThread::msleep(10);
+		timeout -= 10;
 	}
 	
-	/* run the initialization function as soon as the application 
-	   as started the main loop
-	 */
-	QMetaObject::invokeMethod(this,"runInitFunc",Qt::QueuedConnection);
+	if(timeout <= 0)
+	{
+		fprintf(stderr,"[isabel] timeout while waiting for the application to startup\n");
+	}
+	else
+	{
+		/* run the initialization function as soon as the application 
+		   as started the main loop
+		 */
+		QMetaObject::invokeMethod(this,"runInitFunc",Qt::QueuedConnection);
+	}
 }
 
 Q_INVOKABLE void isabelStartup::runInitFunc(void)

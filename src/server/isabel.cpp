@@ -37,7 +37,11 @@
 
 /*--------------------- Private Variable Definitions ----------------*/
 
-isabelServer *server = NULL;
+/* the TCP server that provides access to the application internals */
+isabelServer *server = NULL;	
+
+/* name of the environment variable that prevents multiple loading of the library */
+#define ISABEL_IS_LOADED "ISABEL_IS_LOADED"  
 
 /*--------------------- Private Function Declarations ---------------*/
 
@@ -47,10 +51,31 @@ LIB_INIT_FUNC void isabel_initialize(void)
 {
 	fprintf(stderr,"[isabel] loaded library \n");
 
-	/* create the Qt object that will wait for the application to start */
-	isabelStartup* init = new isabelStartup(isabel_main);
-	QObject::connect(init,SIGNAL(startupComplete()),init,SLOT(deleteLater()));
-	init->watchForStartup();
+	if(qEnvironmentVariableIsSet(ISABEL_IS_LOADED))
+	{
+		fprintf(stderr,"[isabel] an instance was previously loaded, doing nothing \n");
+	}
+	else
+	{ 
+		qputenv(ISABEL_IS_LOADED,"true");
+
+		/* create the Qt object that will wait for the application to start */
+		isabelStartup* init = new isabelStartup(isabel_main);
+		QObject::connect(init,SIGNAL(startupComplete()),init,SLOT(deleteLater()));
+		init->watchForStartup();
+	}
+}
+
+LIB_EXIT_FUNC void isabel_destroy(void)
+{
+	fprintf(stderr,"[isabel] unloading library \n");
+
+	/* clean up used resources and unset the used resources */
+	if(NULL != server)
+	{
+		qunsetenv(ISABEL_IS_LOADED);
+		delete server;
+	}
 }
 
 void isabel_main(void)

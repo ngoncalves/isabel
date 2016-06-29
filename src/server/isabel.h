@@ -47,6 +47,13 @@
 */
 LIB_INIT_FUNC void isabel_initialize(void);
 
+/* The library cleanup function.
+
+	This function is executed when the library is unloaded.
+	It stops the TCP server and releases used memory.
+*/
+LIB_EXIT_FUNC void isabel_destroy(void);
+
 /* Main server function, which runs in its own thread.
 
 	This function creates the TCP server which listens

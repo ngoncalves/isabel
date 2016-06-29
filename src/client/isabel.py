@@ -326,7 +326,6 @@ class Application(Tester):
 				self.db.insert({ 'id'         : obj.id,		  # the object unique identifier number 
 								 'type'       : obj.type,	  # the object number 
 								 'parent'     : obj.parent,   # the id of the object parent, 0 if its at the root
-								 'address'    : obj.address,  # the memory location of the object
 								 'name'       : obj.name,     # if available, the object name
 								 'properties' : dict()		  # map for the object properties	
 					           })
