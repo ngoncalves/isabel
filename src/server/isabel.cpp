@@ -40,9 +40,6 @@
 /* the TCP server that provides access to the application internals */
 isabelServer *server = NULL;	
 
-/* name of the environment variable that prevents multiple loading of the library */
-#define ISABEL_IS_LOADED "ISABEL_IS_LOADED"  
-
 /*--------------------- Private Function Declarations ---------------*/
 
 /*--------------------- Public Function Declaration  ----------------*/
@@ -51,19 +48,13 @@ LIB_INIT_FUNC void isabel_initialize(void)
 {
 	fprintf(stderr,"[isabel] loaded library \n");
 
-	if(qEnvironmentVariableIsSet(ISABEL_IS_LOADED))
-	{
-		fprintf(stderr,"[isabel] an instance was previously loaded, doing nothing \n");
-	}
-	else
-	{ 
-		qputenv(ISABEL_IS_LOADED,"true");
+	/* unset LD_PRELOAD to ensure that the library is not loaded more than once */
+	qunsetenv("LD_PRELOAD");
 
-		/* create the Qt object that will wait for the application to start */
-		isabelStartup* init = new isabelStartup(isabel_main);
-		QObject::connect(init,SIGNAL(startupComplete()),init,SLOT(deleteLater()));
-		init->watchForStartup();
-	}
+	/* create the Qt object that will wait for the application to start */
+	isabelStartup* init = new isabelStartup(isabel_main);
+	QObject::connect(init,SIGNAL(startupComplete()),init,SLOT(deleteLater()));
+	init->watchForStartup();
 }
 
 LIB_EXIT_FUNC void isabel_destroy(void)
@@ -73,7 +64,6 @@ LIB_EXIT_FUNC void isabel_destroy(void)
 	/* clean up used resources and unset the used resources */
 	if(NULL != server)
 	{
-		qunsetenv(ISABEL_IS_LOADED);
 		delete server;
 	}
 }
