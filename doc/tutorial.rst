@@ -2,7 +2,7 @@ Isabel Tutorial
 ===============
 :Author: Nelson Gonçalves
 :Email: nelsongoncalves@patois.eu
-:Website: https://github.com/ngoncalves
+:Website: www.patois.eu/isabel.html
 
 
 Preliminary

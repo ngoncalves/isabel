@@ -2,7 +2,7 @@ Known Issues
 ===============
 :Author: Nelson Gonçalves
 :Email: nelsongoncalves@patois.eu
-:Website: https://github.com/ngoncalves
+:Website: www.patois.eu
 
 
 Rationale
@@ -10,7 +10,7 @@ Rationale
 
 The day only has 24 hours and I think it is preferable to release
 something that is good enough to generate interest and feedback, than
-to sit years in seclusion while building the perfect software that will
+to sit years in seclusion, building the perfect software that will
 change mankind.
 
 Server
@@ -28,8 +28,8 @@ which is based on QtJSON. The most straightforward solution would be to simply r
 the Qt serialization protocol, but this requires free time that I don't have.
 
 Taking a screenshot when the Qt application is running in full screen may or may not
-work. Typically all you get a picture with all pixels black. The reason for this is
-not known yet.
+work. Typically all you get a picture with all pixels black. This occurs with AMD
+graphics cards using the fglrx driver.
 
 Client
 ------

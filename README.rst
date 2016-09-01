@@ -1,25 +1,22 @@
 Isabel
 =======
-:Author: Nelson Gonçalves
-:Website: https://github.com/ngoncalves
+:author: Nelson Gonçalves
+:Website: www.patois.eu/isabel.html
 
 Summary
 -------
 
 Isabel is a test automation tool for Qt based applications running in POSIX systems
-with X11 windows server. Or to put it in other words, most Linux distros although
-Windows support is planned.
+with X11 windows server. Or to put it in other words, most Linux distros.
 
-Isabel is licensed as GPL v3, see the file LICENSE.txt for details. The exception 
-is the source code for the sample Qt applications in the sub-folders `src/test/example_qt`
-and `src/test/example_quick`. These are originally from the open-source version of Qt5.4,
-and are licensed under BSD.
+It is licensed as GPL v3, except for the source of the sample Qt applications that
+are used for testing. These are originally from the open-source version of Qt5.4,
+and are licensed under BSD. *Note that this does not imply in any way that Qt endorses
+the Isabel framework*.
 
-Isabel was initially forked from QtInspector_ by Robert Knight and uses QtJson_, by
-Eeli Reilin, for the serialization of QVariant objects.
+Isabel uses also QtJson_, by Eeli Reilin, for the serialization of QVariant objects.
 
-The example Qt applications were taken verbatim from the Qt Creator set of examples.
-*Note that this does not imply in any way that Qt endorses the Isabel framework*.
+The source code is available here_, from Github.
 
 Status
 ------
@@ -42,6 +39,24 @@ on the application under test. Through the server, the client can:
 Isabel comes with a python client, see the `docs` folder for a small tutorial on how
 to use the framework.
 
+Known Issues
+------------
+
+The screenshot functionality does not work on AMD cards that use the closed source 
+fglrx driver. When taking a screenshot, all you get is a black picture.
+
+Although it can record all key presses made by the user, on Qt5.4 it cannot replay
+modifier keys (Shift, Ctrl, etc). The reason for this is that Qt5 changed to Xcb, 
+over from the X11 client, and this bug is still not fixed.
+
+Serialization of all QVariant objects is not fully working, this is due to a limitation
+of QtJson. To be fair, the author strongly recomends not to use QtJson on Qt5 since 
+it comes with JSON serialization. However QtJson is used in Isabel because there is
+not simple alternative for Qt4 based applications.
+
+Isabel does not work with statically built Qt applications. This is a limitation due
+to using LD_PRELOAD for injecting the Isabel code into the applications.
+
 Building Pre-Requisites 
 ------------------------
 
@@ -60,9 +75,9 @@ The Python client has the following dependencies:
  * tinydb_, a lightweight and simple Python document database
  * opencv_ for python, a library for image manipulation
 
-Most of these software packages are readily available from your distro repositories. The bravest can
-of course use the Internet's and compile from scratch, everybody else can just use apt-get. To install
-the server dependencies:
+Most of these software packages are readily available from your distro repositories. The
+bravest can of course use the Internet's and compile from scratch, everybody else can just
+use apt-get. To install the server dependencies:
 
   $ sudo apt-get install libprotoc-dev protobuf-compiler libx11-dev libxtst-dev libcairo2-dev
 
@@ -126,3 +141,4 @@ code. The exceptions, of course, are the documentation and tutorials.
 .. _opencv: http://opencv.org/
 .. _behave: http://pythonhosted.org/behave/
 .. _libprotobuf: https://github.com/google/protobuf
+.. _here: https://github.com/ngoncalves/isabel
